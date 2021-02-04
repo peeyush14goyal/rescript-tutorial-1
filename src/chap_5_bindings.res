@@ -5,8 +5,8 @@
 
   To build real world applications the langauge reference manual alone
   is insufficient. You need libraries, frameworks, tooling, documentation,
-  tutorials and a good community of developers. 
-  
+  tutorials and a good community of developers.
+
   So a new programming language has a high entry barrier to cross before
   it can reach mass adoption.
 
@@ -21,8 +21,8 @@
 
   ReScript has really good interop with JavaScript. This makes it possible
   for ReScript to take advantage of the code which is already written for
-  JavaScript. 
-  
+  JavaScript.
+
   If a good JavaScript library exists, you can use it in ReScript through
   writing bindings. You've already used the JS API which are bindings to
   the browser Web APIs. When you use `Js.Array.length`, you are infact
@@ -31,10 +31,10 @@
 
   Similar to how types do not generate any compiled JavaScript, a binding
   should also not generate any JavaScript. You do not pay any cost, or
-  take an indirection by using a binding. The ReScript compiler is 
+  take an indirection by using a binding. The ReScript compiler is
   extremely aggressive in generating high quality compiled JavaScript
-  code. The code is also human readable. 
-  
+  code. The code is also human readable.
+
   There is this expectation that code generators are not good at generating
   human readable code. The ReScript compiler is a counter example to that
   expectation.
@@ -43,9 +43,9 @@
 /*
   You can drop raw JavaScript code into your ReScript code. This is useful
   when you want to use code written in JavaScript, and immediately try it
-  out. 
-  
-  You can use the `%raw()` 
+  out.
+
+  You can use the `%raw()`
  */
 
 /*
@@ -93,11 +93,11 @@ dateInDdMmYyyy() // dd/mm/yyyy
 
   If reading from the file is successful, then the error object could be
   null or undefined. As you know there is no equivalent in ReScript to
-  represent these values. But we have a JS API for null or undefined 
-  values - Js.Nullable.t<'a>. 
-  
-  The type for a JavaScript object is `{..}`. 
-  
+  represent these values. But we have a JS API for null or undefined
+  values - Js.Nullable.t<'a>.
+
+  The type for a JavaScript object is `{..}`.
+
   By substitution we can therefore give error object the following type:
 
     `Js.Nullable.t<{..}>`
@@ -123,7 +123,7 @@ external readFile: (string, string, (Js.Nullable.t<{..}>, string) => unit) => un
   exception:
 
     ```
-    config file errro:  
+    config file errro:
       [Error: ENOENT: no such file or directory, open './bsconfig.json'] {
         errno: -2,
         code: 'ENOENT',
@@ -147,8 +147,21 @@ readFile("./bsconfig.json", "utf8", (error, data) => {
 */
 
 /*
+Some JS functions require arbitrary number of arguments of SAME type. For implementing this, you
+can add `@bs.variadic` to your `external`.Now your function will accept single argument
+i.e. array of <YOUR TYPE> elements
+
+ Example :
+
+ @bs.module("path") @bs.variadic
+ external join: array<string> => string = "join"
+
+ let v = join(["a", "b"])
+*/
+
+/*
   -----------------------------------------------------------------------------
-  Exercise 1 
+  Exercise 1
   -----------------------------------------------------------------------------
   Write a binding for the Node.js `fs.readFileSync` API.
   -----------------------------------------------------------------------------
@@ -234,5 +247,5 @@ counter.contents // 10
 
   You can access the value inside of a `ref` like:
 
-    `counter.contents`  
+    `counter.contents`
  */
